@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # GrowFast IT Solutions - MERN Web Application
 
 A professional, secure MERN stack web application for an IT Solutions company offering:
@@ -164,3 +165,6 @@ Frontend URL: `http://localhost:5173`
 - Add unit/integration tests (Jest + Supertest)
 - Add CI/CD pipeline and deployment configs
 - Add SSL + reverse proxy setup (Nginx/Cloudflare) for production
+=======
+# Samaaroh
+>>>>>>> 2d880dede93bf2a585901012ff3943fe47065438
