@@ -17,20 +17,20 @@ export default function HomePage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7 }}
           >
-            <span className="kicker">Samaaroh Private Limited</span>
+            <span className="kicker">TUNED PPC ADVERTISING</span>
             <h1>
-              Your Growth Partner for <br /> Premium Websites, Apps & Software
+              Skyrocket Your Leads <br /> with Precision
             </h1>
             <p>
-              We build conversion-focused websites, high-performance Android apps, and custom
-              software solutions that help your business generate more leads and scale faster.
+              Your growth partner in paid advertising — strategy, creative, and continuous
+              optimization to deliver measurable ROI.
             </p>
             <div className="hero-actions">
               <Link className="btn btn-primary" to="/contact">
-                Book a Free Consultation
+                Book a Free Strategy Call
               </Link>
               <Link className="btn btn-ghost" to="/services">
-                Explore Services
+                View Service Plans
               </Link>
             </div>
           </motion.div>
