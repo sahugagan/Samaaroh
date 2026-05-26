@@ -25,7 +25,10 @@ const allowedOrigins = (process.env.CORS_ORIGIN || "http://localhost:5173")
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) return callback(null, true);
+      if (!origin || allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+
       return callback(new Error("Not allowed by CORS"));
     },
     credentials: true,
@@ -35,11 +38,13 @@ app.use(
 // ================== Security Middleware ==================
 app.use(
   helmet({
-    contentSecurityPolicy: process.env.NODE_ENV === "production" ? undefined : false,
+    contentSecurityPolicy:
+      process.env.NODE_ENV === "production" ? undefined : false,
     crossOriginResourcePolicy: { policy: "cross-origin" },
     referrerPolicy: { policy: "no-referrer" },
   })
 );
+
 app.use(mongoSanitize());
 // app.use(xss()); // optional
 app.use(hpp());
@@ -50,8 +55,12 @@ const limiter = rateLimit({
   limit: Number(process.env.RATE_LIMIT_MAX || 200),
   standardHeaders: "draft-7",
   legacyHeaders: false,
-  message: { success: false, message: "Too many requests, please try again later." },
+  message: {
+    success: false,
+    message: "Too many requests, please try again later.",
+  },
 });
+
 app.use("/api", limiter);
 
 // ================== Body Parser ==================
@@ -63,6 +72,11 @@ app.use(cookieParser());
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
+
+// ================== Root Route ==================
+app.get("/", (req, res) => {
+  res.send("Samaaroh API is running");
+});
 
 // ================== Health Check ==================
 app.get("/api/health", (req, res) => {
@@ -94,6 +108,7 @@ app.use((err, req, res, next) => {
   }
 
   console.error("Global Error:", err.message);
+
   return res.status(500).json({
     success: false,
     message: "Internal server error",
@@ -108,11 +123,18 @@ const startServer = async () => {
     const mongoUri = process.env.MONGO_URI;
     const jwtSecret = process.env.JWT_SECRET || "";
 
-    if (!mongoUri) throw new Error("MONGO_URI is not set in environment variables");
-    if (jwtSecret.length < 32)
-      throw new Error("JWT_SECRET must be set and at least 32 characters long");
+    if (!mongoUri) {
+      throw new Error("MONGO_URI is not set in environment variables");
+    }
+
+    if (jwtSecret.length < 32) {
+      throw new Error(
+        "JWT_SECRET must be set and at least 32 characters long"
+      );
+    }
 
     await mongoose.connect(mongoUri);
+
     console.log("MongoDB connected successfully");
 
     app.listen(PORT, () => {
